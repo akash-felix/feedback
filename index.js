@@ -2,6 +2,8 @@ const express = require('express');
 const authRoutes = require('./routes/authRoutes');
 require('./models/User');
 require('./services/passport');
+require('./models/Survey');
+const surveyRoutes = require('./routes/surveyRoutes');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
@@ -9,6 +11,7 @@ const app = express();
 const mongoose = require('mongoose');
 const billingRoutes = require('./routes/billingRoutes');
 const bodyParser = require('body-parser');
+
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -25,6 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 authRoutes(app);
 billingRoutes(app);
+surveyRoutes(app);
 mongoose.connect(keys.mongoURI);
 
 if ((process.env.NODE_ENV = 'production')) {
